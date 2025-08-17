@@ -1,0 +1,159 @@
+-- MySQL dump 10.13  Distrib 8.0.43, for Linux (x86_64)
+--
+-- Host: localhost    Database: alx_book_store
+-- ------------------------------------------------------
+-- Server version	8.0.43-0ubuntu0.22.04.1
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `AUTHORS`
+--
+
+DROP TABLE IF EXISTS `AUTHORS`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `AUTHORS` (
+  `AUTHOR_ID` int NOT NULL AUTO_INCREMENT,
+  `AUTHOR_NAME` varchar(215) NOT NULL,
+  PRIMARY KEY (`AUTHOR_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `AUTHORS`
+--
+
+LOCK TABLES `AUTHORS` WRITE;
+/*!40000 ALTER TABLE `AUTHORS` DISABLE KEYS */;
+/*!40000 ALTER TABLE `AUTHORS` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `BOOKS`
+--
+
+DROP TABLE IF EXISTS `BOOKS`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `BOOKS` (
+  `BOOK_ID` int NOT NULL AUTO_INCREMENT,
+  `TITLE` varchar(130) NOT NULL,
+  `AUTHOR_ID` int DEFAULT NULL,
+  `PRICE` double DEFAULT NULL,
+  `PUBLICATION_DATE` date DEFAULT NULL,
+  PRIMARY KEY (`BOOK_ID`),
+  KEY `AUTHOR_ID` (`AUTHOR_ID`),
+  CONSTRAINT `BOOKS_ibfk_1` FOREIGN KEY (`AUTHOR_ID`) REFERENCES `AUTHORS` (`AUTHOR_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `BOOKS`
+--
+
+LOCK TABLES `BOOKS` WRITE;
+/*!40000 ALTER TABLE `BOOKS` DISABLE KEYS */;
+/*!40000 ALTER TABLE `BOOKS` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `CUSTOMERS`
+--
+
+DROP TABLE IF EXISTS `CUSTOMERS`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `CUSTOMERS` (
+  `CUSTOMER_ID` int NOT NULL AUTO_INCREMENT,
+  `CUSTOMER_NAME` varchar(215) NOT NULL,
+  `EMAIL` varchar(215) DEFAULT NULL,
+  `ADDRESS` text,
+  PRIMARY KEY (`CUSTOMER_ID`),
+  UNIQUE KEY `EMAIL` (`EMAIL`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `CUSTOMERS`
+--
+
+LOCK TABLES `CUSTOMERS` WRITE;
+/*!40000 ALTER TABLE `CUSTOMERS` DISABLE KEYS */;
+/*!40000 ALTER TABLE `CUSTOMERS` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ORDERS`
+--
+
+DROP TABLE IF EXISTS `ORDERS`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `ORDERS` (
+  `ORDER_ID` int NOT NULL AUTO_INCREMENT,
+  `CUSTOMER_ID` int DEFAULT NULL,
+  `ORDER_DATE` date DEFAULT NULL,
+  PRIMARY KEY (`ORDER_ID`),
+  KEY `CUSTOMER_ID` (`CUSTOMER_ID`),
+  CONSTRAINT `ORDERS_ibfk_1` FOREIGN KEY (`CUSTOMER_ID`) REFERENCES `CUSTOMERS` (`CUSTOMER_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ORDERS`
+--
+
+LOCK TABLES `ORDERS` WRITE;
+/*!40000 ALTER TABLE `ORDERS` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ORDERS` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ORDER_DETAILS`
+--
+
+DROP TABLE IF EXISTS `ORDER_DETAILS`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `ORDER_DETAILS` (
+  `ORDERDETAILID` int NOT NULL AUTO_INCREMENT,
+  `ORDER_ID` int DEFAULT NULL,
+  `BOOK_ID` int DEFAULT NULL,
+  `QUANTITY` double DEFAULT NULL,
+  PRIMARY KEY (`ORDERDETAILID`),
+  KEY `ORDER_ID` (`ORDER_ID`),
+  KEY `BOOK_ID` (`BOOK_ID`),
+  CONSTRAINT `ORDER_DETAILS_ibfk_1` FOREIGN KEY (`ORDER_ID`) REFERENCES `ORDERS` (`ORDER_ID`),
+  CONSTRAINT `ORDER_DETAILS_ibfk_2` FOREIGN KEY (`BOOK_ID`) REFERENCES `BOOKS` (`BOOK_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ORDER_DETAILS`
+--
+
+LOCK TABLES `ORDER_DETAILS` WRITE;
+/*!40000 ALTER TABLE `ORDER_DETAILS` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ORDER_DETAILS` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2025-08-17 23:36:51

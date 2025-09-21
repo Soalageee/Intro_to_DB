@@ -22,7 +22,7 @@
 DROP TABLE IF EXISTS `Authors`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `Authors` (
+CREATE TABLE IF NOT EXISTS `Authors` (
   `author_id` int NOT NULL AUTO_INCREMENT,
   `author_name` varchar(215) NOT NULL,
   PRIMARY KEY (`author_id`)
@@ -45,7 +45,7 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `Books`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `Books` (
+CREATE TABLE IF NOT EXISTS `Books` (
   `book_id` int NOT NULL AUTO_INCREMENT,
   `title` varchar(130) NOT NULL,
   `author_id` int DEFAULT NULL,
@@ -73,7 +73,7 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `Customers`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `Customers` (
+CREATE TABLE IF NOT EXISTS `Customers` (
   `customer_id` int NOT NULL AUTO_INCREMENT,
   `customer_name` varchar(215) NOT NULL,
   `email` varchar(215) NOT NULL,
@@ -98,7 +98,7 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `Order_Details`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `Order_Details` (
+CREATE TABLE IF NOT EXISTS `Order_Details` (
   `orderdetailid` int NOT NULL AUTO_INCREMENT,
   `order_id` int DEFAULT NULL,
   `book_id` int DEFAULT NULL,
@@ -127,7 +127,7 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `Orders`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `Orders` (
+CREATE TABLE IF NOT EXISTS `Orders` (
   `order_id` int NOT NULL AUTO_INCREMENT,
   `customer_id` int DEFAULT NULL,
   `order_date` date DEFAULT NULL,
